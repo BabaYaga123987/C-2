@@ -4,21 +4,24 @@
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите значение a: ");
+            Console.Write("Введите число а: ");
             int a = int.Parse(Console.ReadLine());
-            Console.Write("Введите значение b: ");
+            Console.Write("Введите число b: ");
             int b = int.Parse(Console.ReadLine());
 
-            double task1 = (double)(a - 1) / (b + 1);
-            double task2 = (double)((b + a) * a) / 2;
-            double task3 = (double)(a % b) + Math.Pow(a, b);
-            /* К найденому остатку от деления числа а на b прибавляется число а в степени b, поэтому b не может 
-            равняться нулю по умолчанию, а переменная а может. */
-            
-            Console.WriteLine($"Результат задачи 1: {task1}");
-            Console.WriteLine($"Результат задачи 2: {task2}");
-            Console.WriteLine($"Результат задачи 3: {task3}");
+            int sum = a + b;
+            int product = a * b;
+            int difference = a - b;
+            double arithmetic = (double)(a + b) / 2;
 
+            Console.WriteLine($"Сумма: {sum}");
+            Console.WriteLine($"Произведение: {product}");
+            Console.WriteLine($"Разность: {difference}");
+            Console.WriteLine($"Среднее арифметическое: {arithmetic}");
+
+            Console.Write("Введите четырехзначное целое число: ");
+            int number = int.Parse(Console.ReadLine());
+        
 
         }
     }
