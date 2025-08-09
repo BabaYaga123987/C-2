@@ -11,7 +11,7 @@
 
             double task1 = (double)(a - 1) / (b + 1);
             double task2 = (double)((b + a) * a) / 2;
-            double task3 = (double)(a % b) + Math.Pow(a, b);
+            double task3 = (a % b) + Math.Pow(a, b);
             /* К найденому остатку от деления числа а на b прибавляется число а в степени b, поэтому b не может 
             равняться нулю по умолчанию, а переменная а может. */
             
