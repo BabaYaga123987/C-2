@@ -7,36 +7,106 @@ namespace C_2
         static void Main(string[] args)
         {
             Console.WriteLine("Введите сумму выдачи (от 1 до 9999)");
+
             int sum = int.Parse(Console.ReadLine());
 
-            string mistake;
-            if (sum <1 || sum >9999)
+            bool mistake;
+            if (sum < 1 || sum > 9999)
             {
-                mistake = "Ошибка: сумма должна быть от 1 до 9999";
+                mistake = false;
             }
             else
             {
-                mistake = "true";
+                mistake = true;
             }
 
 
-            string thousand = sum / 1000 == 1 ? "Тысяча" : sum / 1000 == 2 ? "Две тысячи" :
-                             sum / 1000 == 3 ? "Три тысячи" :
-                             sum / 1000 == 4 ? "Четыре тысячи" :
-                             sum / 1000 == 5 ? "Пять тысяч" :
-                             sum / 1000 == 6 ? "Шесть тысяч" :
-                             sum / 1000 == 7 ? "Семь тысяч" :
-                             sum / 1000 == 8 ? "Восемь тысяч" :
-                             sum / 1000 == 9 ? "Девять тысяч" : "";
+            string thousand;
+            if (sum / 1000 == 1)
+            {
+                thousand = "Тысяча";
+            }
+            else if (sum / 1000 == 2)
+            {
+                thousand = "Две тысячи";
+            }
+            else if (sum / 1000 == 3)
+            {
+                thousand = "Три тысячи";
+            }
+            else if (sum / 1000 == 4)
+            {
+                thousand = "Четыре тысячи";
+            }
+            else if (sum / 1000 == 5)
+            {
+                thousand = "Пять тысяч";
+            }
+            else if (sum / 1000 == 6)
+            {
+                thousand = "Шесть тысяч";
+            }
+            else if (sum / 1000 == 7)
+            {
+                thousand = "Семь тысяч";
+            }
+            else if (sum / 1000 == 8)
+            {
+                thousand = "Восемь тысяч";
+            }
+            else if (sum / 1000 == 9)
+            {
+                thousand = "Девять тысяч";
+            }
+            else
+            {
+                thousand = "";
+            }
+
+
             int sum2 = sum % 1000;
-            string hundred = sum2 / 100 == 1 ? "сто" : sum2 / 100 == 2 ? "двести" :
-                             sum2 / 100 == 3 ? "триста" :
-                             sum2 / 100 == 4 ? "четыреста" :
-                             sum2 / 100 == 5 ? "пятьсот" :
-                             sum2 / 100 == 6 ? "шестьсот" :
-                             sum2 / 100 == 7 ? "семьсот" :
-                             sum2 / 100 == 8 ? "восемьсот" :
-                             sum2 / 100 == 9 ? "девятьсот" : "";
+            string hundred;
+            if (sum2 / 100 == 1)
+            {
+                hundred = "сто";
+            }
+            else if (sum2 / 100 == 2)
+            {
+                hundred = "двести";
+            }
+            else if (sum2 / 100 == 3)
+            {
+                hundred = "триста";
+            }
+            else if (sum2 / 100 == 4)
+            {
+                hundred = "четыреста";
+            }
+            else if (sum2 / 100 == 5)
+            {
+                hundred = "пятьсот";
+            }
+            else if (sum2 / 100 == 6)
+            {
+                hundred = "шестьсот";
+            }
+            else if (sum2 / 100 == 7)
+            {
+                hundred = "семьсот";
+            }
+            else if (sum2 / 100 == 8)
+            {
+                hundred = "восемьсот";
+            }
+            else if (sum2 / 100 == 9)
+            {
+                hundred = "девятьсот";
+            }
+            else
+            {
+                hundred = "";
+            }
+
             int sum3 = sum % 100;
             int sum4 = sum3 % 10;
 
@@ -67,7 +137,7 @@ namespace C_2
                       sum3 / 10 == 9 ? "девяносто" : "";
             }
 
-
+            
             string one;
             if (ten == "одиннадцать" || ten == "двенадцать" || ten == "тринадцать" ||
                 ten == "четырнадцать" || ten == "пятнадцать" || ten == "шестнадцать" ||
@@ -87,21 +157,39 @@ namespace C_2
                       sum4 == 9 ? "девять" : "";
             }
 
-            
 
-            string dollar = sum3 / 10 == 1 ? "долларов" :
-                sum3 / 10 != 1 && sum4 == 1 ? "доллар" :
-                sum3 / 10 != 1 && sum4 == 0 ? "долларов" :
-                sum3 / 10 != 1 && sum4 > 1 && sum4 <= 4 ? "доллара" : "долларов";
+            string dollar;
+            if (sum3 / 10 == 1)
+            {
+                dollar = "долларов";
+            }
+            else if (sum3 / 10 != 1 && sum4 == 1)
+            {
+                dollar = "доллар";
+            }
+            else if (sum3 / 10 != 1 && sum4 == 0)
+            {
+                dollar = "долларов";
+            }
+            else if (sum3 / 10 != 1 && sum4 > 1 && sum4 <= 4)
+            {
+                dollar = "доллара";
+            }
+            else
+            {
+                dollar = "долларов";
+            }
 
-            if (mistake == "true")
+
+
+            if (mistake == true)
             {
                 Console.WriteLine($"Выдача: {thousand} {hundred} {ten} {one} {dollar}");
             }
             else
             {
-                Console.WriteLine(mistake);
-            }    
+                Console.WriteLine("Ошибка: сумма должна быть от 1 до 9999");
+            }   
         }
         }
     }
