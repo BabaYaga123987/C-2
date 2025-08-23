@@ -5,7 +5,7 @@ namespace C_2
     internal class Program
     {
         static void Main(string[] args)
-        {
+        { 
             Console.WriteLine("Введите размер ставки (от 5$ до 100$): ");
             int betSize = int.Parse(Console.ReadLine());
 
@@ -47,13 +47,11 @@ namespace C_2
             {
                 coefficient = 1.35;
             }
-            else if (randomNumber1 != randomNumber2 && randomNumber1 == 7 && randomNumber1 != 9 && randomNumber3 == 7
-                && randomNumber3 != 9)
+            else if (randomNumber1 != randomNumber2 && randomNumber1 == 7 && randomNumber3 == 7)
             {
                 coefficient = 2 * 1.6;
             }
-            else if (randomNumber1 != randomNumber2 && randomNumber1 == 9 && randomNumber1 != 7 && randomNumber3 == 9
-                && randomNumber3 != 7)
+            else if (randomNumber1 != randomNumber2 && randomNumber1 == 9 && randomNumber3 == 9)
             {
                 coefficient = 2 * 1.35;
             }
@@ -85,7 +83,7 @@ namespace C_2
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Вы проиграли.");
             }
 
-            
+            // Придумать код, в котором используются не 3 числа рандомных, а одно трехзначное число от 100 до 999. Возможно, так будет работать лучше и легче.
 
         }
     }
