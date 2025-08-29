@@ -5,10 +5,10 @@ namespace C_2
     internal class Program
     {
         static void Main(string[] args)
-        { 
+        {
             Console.WriteLine("Введите размер ставки (от 5$ до 100$): ");
             int betSize = int.Parse(Console.ReadLine());
-            
+
             int randomNumber1 = Random.Shared.Next(1, 9);
             int randomNumber2 = Random.Shared.Next(1, 9);
             int randomNumber3 = Random.Shared.Next(1, 9);
@@ -16,7 +16,7 @@ namespace C_2
 
 
             double coefficient = 0;
-            
+
             if (randomNumber1 != randomNumber2 && randomNumber1 == 7)
             {
                 coefficient += 1.6;
@@ -55,37 +55,37 @@ namespace C_2
                 coefficient = 15 * 1.25 + 1.35;
             }
             else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 != 7 && randomNumber3 == 9)
-                // Условие 2 одинаковых чисел и 9 на конце
+            // Условие 2 одинаковых чисел и 9 на конце
             {
                 coefficient = randomNumber1 * 1.25 + 1.35;
             }
-            else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 != 7 && randomNumber3 == 7) 
-                //Условие 2 одинаковых чисел и 7 на конце
-            { 
+            else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 != 7 && randomNumber3 == 7)
+            //Условие 2 одинаковых чисел и 7 на конце
+            {
                 coefficient = randomNumber1 * 1.25 + 1.6;
             }
             else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 != 7 && randomNumber3 != 9 && randomNumber3 != 7)
-                // Условие 2 одинаковых чисел
+            // Условие 2 одинаковых чисел
             {
                 coefficient = randomNumber1 * 1.25;
             }
-            else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 == 7 && randomNumber3 != 9) 
-                // Условие мини Джекпота
+            else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 == 7 && randomNumber3 != 9)
+            // Условие мини Джекпота
             {
                 coefficient = 15 * 1.25;
             }
             else if (randomNumber1 == randomNumber2 && randomNumber2 != randomNumber3 && randomNumber1 == 7 && randomNumber3 == 9)
-                // Условие мини Джекпота с 9 на конце
+            // Условие мини Джекпота с 9 на конце
             {
                 coefficient = 15 * 1.25 + 1.35;
             }
-            else if (randomNumber1 != randomNumber2 && randomNumber1 != 7 && randomNumber1 != 9 
-                && randomNumber3 != 7 && randomNumber3 != 9 && randomNumber2 !=7 && randomNumber2 != 9) // Условие проигрыша
+            else if (randomNumber1 != randomNumber2 && randomNumber1 != 7 && randomNumber1 != 9
+                && randomNumber3 != 7 && randomNumber3 != 9 && randomNumber2 != 7 && randomNumber2 != 9) // Условие проигрыша
             {
                 coefficient = 0;
             }
-            
-            
+
+
 
 
             double win = betSize * coefficient;
@@ -106,7 +106,6 @@ namespace C_2
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Вы проиграли.");
             }
 
-            
 
         }
     }
