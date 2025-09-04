@@ -19,39 +19,15 @@ namespace C_2
                 Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$.");
             }
 
+            int case1 = 0; // Переменная, которая будет получать значение 1, если отсутствует комбинация, но есть число 7 или 9
 
-            int randomNumber1 = Random.Shared.Next(1, 10); 
+            int randomNumber1 = Random.Shared.Next(1, 10);
             int randomNumber2 = Random.Shared.Next(1, 10);
             int randomNumber3 = Random.Shared.Next(1, 10);
 
-
-
             double coefficient = 0;
 
-            if (randomNumber1 != randomNumber2 && randomNumber1 == 7)
-            {
-                coefficient += 1.6;
-            }
-            if (randomNumber1 != randomNumber2 && randomNumber2 == 7)
-            {
-                coefficient += 1.6;
-            }
-            if (randomNumber1 != randomNumber2 && randomNumber3 == 7)
-            {
-                coefficient += 1.6;
-            }
-            if (randomNumber1 != randomNumber2 && randomNumber1 == 9)
-            {
-                coefficient += 1.35;
-            }
-            if (randomNumber1 != randomNumber2 && randomNumber2 == 9)
-            {
-                coefficient += 1.35;
-            }
-            if (randomNumber1 != randomNumber2 && randomNumber3 == 9)
-            {
-                coefficient += 1.35; 
-            } 
+            
             if (randomNumber1 == randomNumber2 && randomNumber2 == randomNumber3 && randomNumber1 != 7) // Условие 3 одинаковых чисел, кроме 7
             {
                 coefficient = randomNumber1 * 15;
@@ -95,11 +71,44 @@ namespace C_2
             {
                 coefficient = 0;
             }
-           
+            else
+            {
+                case1 = 1;
+            }
 
 
+            if (case1 == 1) // Блок кода, который срабатывает, если отсутствует комбинация, но есть число 7 или 9
+            {
+                if (randomNumber1 != randomNumber2 && randomNumber1 == 7)
+                {
+                    coefficient += 1.6;
+                }
+                if (randomNumber1 != randomNumber2 && randomNumber2 == 7)
+                {
+                    coefficient += 1.6;
+                }
+                if (randomNumber1 != randomNumber2 && randomNumber3 == 7)
+                {
+                    coefficient += 1.6;
+                }
+                if (randomNumber1 != randomNumber2 && randomNumber1 == 9)
+                {
+                    coefficient += 1.35;
+                }
+                if (randomNumber1 != randomNumber2 && randomNumber2 == 9)
+                {
+                    coefficient += 1.35;
+                }
+                if (randomNumber1 != randomNumber2 && randomNumber3 == 9)
+                {
+                    coefficient += 1.35;
+                }
+            }    
 
-                double win = betSize * coefficient;
+            
+        
+
+            double win = betSize * coefficient;
             if (win > 0 && coefficient != 150 * 1.5 && betSize >= 5 && betSize <= 100)
             {
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Ваш выиграш: {win}$");
