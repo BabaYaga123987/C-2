@@ -13,13 +13,17 @@ namespace C_2
             if (!int.TryParse(Console.ReadLine(), out int betSize))
             {
                 Console.WriteLine("Ошибка: введите корректное число.");
+                return;
             }
             else if (betSize < 5 || betSize > 100 || betSize % 5 != 0)
             {
                 Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$. Шаг ставки: 5$.");
+                return;
             }
 
-            int case1 = 0; // Переменная, которая будет получать значение 1, если отсутствует комбинация, но есть число 7 или 9
+
+            bool case1 = false; /* Переменная, которая будет получать значение "true", если отсутствует комбинация, но есть число 7 или 9,
+                                 * чтобы запустить алгоритм подсчета выигрыша за наличие 7 или 9 */
 
             int randomNumber1 = Random.Shared.Next(1, 10);
             int randomNumber2 = Random.Shared.Next(1, 10);
@@ -73,11 +77,11 @@ namespace C_2
             }
             else
             {
-                case1 = 1;
+                case1 = true; // Условие отсутствия комбинации, но есть число 7 или 9
             }
 
 
-            if (case1 == 1) // Блок кода, который срабатывает, если отсутствует комбинация, но есть число 7 или 9
+            if (case1 == true) // Блок кода, который срабатывает, если отсутствует комбинация, но есть число 7 или 9
             {
                 if (randomNumber1 != randomNumber2 && randomNumber1 == 7)
                 {
@@ -103,26 +107,23 @@ namespace C_2
                 {
                     coefficient += 1.35;
                 }
-            }    
+            }
 
-            
-        
+
 
             double win = betSize * coefficient;
-            if (win > 0 && coefficient != 150 * 1.5 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
+            if (win > 0 && coefficient != 150 * 1.5)
             {
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Ваш выиграш: {win}$");
             }
-            else if (coefficient == 150 * 1.5 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
+            else if (coefficient == 150 * 1.5)
             {
                 Console.WriteLine($"Джекпот!!! Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Ваш выиграш: {win}$");
             }
-            else if (coefficient == 0 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
+            else if (coefficient == 0)
             {
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Вы проиграли.");
             }
-
-
         }
     }
 }
