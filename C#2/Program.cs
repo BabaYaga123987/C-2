@@ -6,7 +6,7 @@ namespace C_2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите размер ставки (от 5$ до 100$): ");
+            Console.WriteLine("Введите размер ставки (от 5$ до 100$. Шаг ставки: 5$.): ");
 
 
 
@@ -14,9 +14,9 @@ namespace C_2
             {
                 Console.WriteLine("Ошибка: введите корректное число.");
             }
-            else if (betSize < 5 || betSize > 100)
+            else if (betSize < 5 || betSize > 100 || betSize % 5 != 0)
             {
-                Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$.");
+                Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$. Шаг ставки: 5$.");
             }
 
             int case1 = 0; // Переменная, которая будет получать значение 1, если отсутствует комбинация, но есть число 7 или 9
@@ -109,15 +109,15 @@ namespace C_2
         
 
             double win = betSize * coefficient;
-            if (win > 0 && coefficient != 150 * 1.5 && betSize >= 5 && betSize <= 100)
+            if (win > 0 && coefficient != 150 * 1.5 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
             {
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Ваш выиграш: {win}$");
             }
-            else if (coefficient == 150 * 1.5 && betSize >= 5 && betSize <= 100)
+            else if (coefficient == 150 * 1.5 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
             {
                 Console.WriteLine($"Джекпот!!! Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Ваш выиграш: {win}$");
             }
-            else if (coefficient == 0 && betSize >= 5 && betSize <= 100)
+            else if (coefficient == 0 && betSize >= 5 && betSize <= 100 && betSize % 5 == 0)
             {
                 Console.WriteLine($"Выпали числа: {randomNumber1} {randomNumber2} {randomNumber3}. Вы проиграли.");
             }
