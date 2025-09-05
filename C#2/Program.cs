@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Reflection.Metadata.Ecma335;
 
 namespace C_2
 {
@@ -6,20 +7,32 @@ namespace C_2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите размер ставки (от 5$ до 100$. Шаг ставки: 5$.): ");
+           Console.WriteLine("Введите размер ставки (от 5$ до 100$. Шаг ставки: 5$.): ");
 
 
+            int betSize;
 
-            if (!int.TryParse(Console.ReadLine(), out int betSize))
+            while (true)
             {
-                Console.WriteLine("Ошибка: введите корректное число.");
-                return;
+                
+                string input = Console.ReadLine();
+
+                if (!int.TryParse(input, out betSize))
+                {
+                    Console.WriteLine("Ошибка. Введите корректное число:");
+                    continue; 
+                }
+
+                if (betSize < 5 || betSize > 100 || betSize % 5 != 0)
+                {
+                    Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$. Шаг ставки: 5$. Введите корректный размер ставки:");
+                    continue; 
+                }
+
+                break; 
             }
-            else if (betSize < 5 || betSize > 100 || betSize % 5 != 0)
-            {
-                Console.WriteLine("Ошибка: ставка должна быть от 5$ до 100$. Шаг ставки: 5$.");
-                return;
-            }
+
+
 
 
             bool case1 = false; /* Переменная, которая будет получать значение "true", если отсутствует комбинация, но есть число 7 или 9,
