@@ -7,46 +7,40 @@ namespace C_2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите четырехзначное число:");
-            while (true)
-            {   
-                int amount = 0;
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out int number) && number >= 1000 && number <= 9999)
+            // task 1
+            /*    Console.WriteLine("Введите число целое четырехзначное число:");
+                while (true)
                 {
-                    int number1000 = number / 1000;
-                    int number100 = (number / 100) % 10;
-                    int number10 = (number / 10) % 10;
-                    int number1 = number % 10;
-                    if (number1000 % 2 == 0)
+                    string input = Console.ReadLine();
+                    if (int.TryParse(input, out int number) && input.Length == 4)
                     {
-                        amount++;
+                        int amount = 0;
+                        foreach (char c in input)
+                        {
+                            int digit = c - '0'; // перевод символа в цифру
+                            if (digit % 2 == 0)
+                            {
+                                amount++;
+                            }
+                        }
+                        Console.WriteLine($"Количество четных цифр: {amount}");
+                        break;
                     }
-                    if (number100 % 2 == 0)
+                    else
                     {
-                        amount++;
+                        Console.WriteLine("Некорректный ввод. Пожалуйста, введите целое число из 4 цифр:");
                     }
-                    if (number10 % 2 == 0)
-                    {
-                        amount++;
-                    }
-                    if (number1 % 2 == 0)
-                    {
-                        amount++;
-                    }
-                    Console.WriteLine($"Количество четных цифр: {amount}");
-                    break;
                 }
-                else
-                {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите четырехзначное число:");
-                    continue;
-                }
-           }
 
+               /* Примечание к упражнению 1. foreach — это цикл, который перебирает все элементы какой-то коллекции 
+                (массива, списка, строки и т. д.), по одному за раз. char c — это переменная, которая на каждой итерации 
+                принимает один символ строки. input — указывает, что мы перебираем строку input. Цикл сам знает, сколько символов, 
+                и закончит работу, когда они закончатся. 
 
+                */
 
-                int firstOdd;
+            // task 2
+            int firstOdd;
                 int secondOdd;
                 int sum;
                 while (true)
@@ -78,7 +72,7 @@ namespace C_2
                         Console.WriteLine("Некорректный ввод. Пожалуйста, введите второе нечетное целое число.");
                         continue;
                     }
-                } 
+                }
 
                 sum = firstOdd + secondOdd;
                 Console.WriteLine($"Сумма квадратов двух нечетных чисел: {sum}");
@@ -88,31 +82,32 @@ namespace C_2
 
 
 
-
-            int attempts = 0;
-            Console.WriteLine("Введите пароль:"); // Пароль: 12345
-            while (true)
-            {
-                if (Console.ReadLine() == "12345")
+                // task 3
+                int attempts = 0;
+                Console.WriteLine("Введите пароль:"); // Пароль: 12345
+                while (true)
                 {
-                    Console.WriteLine("Добро пожаловать!");
-                    break;
-                }
-                else
-                {
-                    attempts++;
-                    if (attempts != 5)
+                    if (Console.ReadLine() == "12345")
                     {
-                        Console.WriteLine("Пароль неверный. Изначально вы можете повторить ввод до 5 раз.");
-                        continue;
+                        Console.WriteLine("Добро пожаловать!");
+                        break;
                     }
                     else
                     {
-                        break;
+                        attempts++;
+                        if (attempts != 5)
+                        {
+                            Console.WriteLine("Пароль неверный. Изначально вы можете повторить ввод до 5 раз.");
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
             }
-        } 
         }
     }
+
 
