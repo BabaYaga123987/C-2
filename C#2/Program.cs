@@ -123,32 +123,9 @@ namespace C_2
             }
 
             
-
-
-            
-
-
-
-
-
-
-
-
-
-
-                       /* attempts++;
-                        if (attempts != 5)
-                        {
-                            Console.WriteLine("Пароль неверный. Изначально вы можете повторить ввод до 5 раз.");
-                            continue;
-                        }
-                        else
-                        {
-                            break;
-                        } */
-                    }
-                }
-            }
+        }
+    }
+}
         
     
 
