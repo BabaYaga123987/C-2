@@ -54,8 +54,6 @@ namespace C_2
 
             // task 4
             Console.WriteLine("Введите целое число:");
-
-            
             while (true)
             {
                 if (!long.TryParse(Console.ReadLine(), out long number3))
