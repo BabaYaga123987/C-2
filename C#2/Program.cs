@@ -10,15 +10,20 @@ namespace C_2
             for (int i = 0; i < numbers.Length; i++)
             {
                 numbers[i] = Random.Shared.Next(7, 15);
+            }
+            for (int i = 0; i < numbers.Length; i++)
+            {
                 if (numbers[i] > 10)
                 {
                     numbers[i] = numbers[i] - 10;
                 }
+            }
+            for (int i = 0; i < numbers.Length; i++)
+            {
                 Console.Write($"{numbers[i]} ");
             }
-
             // task 2
-               int[] numbers1 = Array.ConvertAll(new int[20], 
+            int[] numbers1 = Array.ConvertAll(new int[20], 
                  _ => Random.Shared.Next(10, 31));
 
                int[] numbers2 = Array.ConvertAll(new int[20],
@@ -29,7 +34,10 @@ namespace C_2
             for (int i = 0; i < numbers3.Length; i++)
             {
                  numbers3[i] = numbers1[i] + numbers2[i];
-                 Console.Write($"{numbers3[i]} ");
+            }
+            for (int i = 0; i < numbers3.Length; i++)
+            { 
+                Console.Write($"{numbers3[i]} ");
             }
             double average = 0;
             for (int i = 0; i < numbers3.Length; i++)
@@ -46,7 +54,7 @@ namespace C_2
                 {
                     MinValue = numbers3[i];
                 }
-                else if (numbers3[i] > MaxValue)
+                if (numbers3[i] > MaxValue)
                 {
                     MaxValue = numbers3[i];
                 }
@@ -66,9 +74,11 @@ namespace C_2
                   for (int i = 0; i < numbers4.Length - 1; i++) // Bubble Sort Algorithm (по спаданию)
                   {
                       bool swapped = false;
-                      for (int j = 0; j < numbers4.Length - i - 1; j++)
-                      {
-                          if (numbers4[j] < numbers4[j + 1])
+                      for (int j = 0; j < numbers4.Length - i - 1; j++) //Также "- i" можно не отнимать, поскольку в данном цикле for
+                               // произведуться все изменения, и фактически значение i будет равняться при его выполнении всегда нулю.
+                               // Но для наглядности и понимания алгоритма я оставил "- i".
+                {
+                    if (numbers4[j] < numbers4[j + 1])
                           {
                           int temp = numbers4[j];
                           numbers4[j] = numbers4[j + 1];
