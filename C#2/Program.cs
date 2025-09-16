@@ -86,26 +86,27 @@ namespace C_2
                           swapped = true;
                           }
                       }
-                      if (!swapped) break;
-                  }
+                      if (!swapped) break; // Если на какой-то итерации не было произведено ни одной замены,
+                                           // значит массив уже отсортирован, и можно прервать выполнение цикла.
+            }
 
-                  /*
-                    for (int i = 0; i < numbers4.Length - 1; i++) // Пример Bubble Sort Algorithm (по возростанию)
-                  {
-                      bool swapped = false;
-                      for (int j = 0; j < numbers4.Length - i - 1; j++)
-                      {
-                          if (numbers4[j] > numbers4[j + 1])
-                          {
-                          int temp = numbers4[j];
-                          numbers4[j] = numbers4[j + 1];
-                          numbers4[j + 1] = temp;
-                          swapped = true;
-                          }
-                      }
-                      if (!swapped) break;
-                  }
-                  */
+            /*
+              for (int i = 0; i < numbers4.Length - 1; i++) // Пример Bubble Sort Algorithm (по возростанию)
+            {
+                bool swapped = false;
+                for (int j = 0; j < numbers4.Length - i - 1; j++)
+                {
+                    if (numbers4[j] > numbers4[j + 1])
+                    {
+                    int temp = numbers4[j];
+                    numbers4[j] = numbers4[j + 1];
+                    numbers4[j + 1] = temp;
+                    swapped = true;
+                    }
+                }
+                if (!swapped) break;
+            }
+            */
 
             Console.Write("\nЭлементы отсортированного четвертого массива: ");
             for (int i = 0; i < numbers4.Length; i++)
