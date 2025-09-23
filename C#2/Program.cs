@@ -7,17 +7,12 @@ namespace C_2
         static void Main(string[] args)
         {
             // task 1
-            
             for (int number = 10; number < 21; number++)
             {
-                int square;
-                square = number * number;
+                int square = number * number;
                 Console.WriteLine(square);
             }
-
-
-
-
+            
             // task 2
             Console.WriteLine("Введите число n (n > 1):");
             while (true)
@@ -29,7 +24,7 @@ namespace C_2
                     Console.WriteLine("Ошибка ввода. Пожалуйста, введите целое число n (n > 1).");
                     continue;
                 }
-                if (n > 1)
+                else
                 {
                     ulong sum = 0;
                     for (uint i = 1; i <= n; i++)
@@ -41,7 +36,6 @@ namespace C_2
                 }
             }
 
-
             // task 3
             for (int number2 = 20; number2 < 50; number2++)
             {
@@ -50,7 +44,6 @@ namespace C_2
                     Console.WriteLine(number2);
                 }
             }
-
 
             // task 4
             Console.WriteLine("Введите целое число:");
@@ -63,14 +56,11 @@ namespace C_2
                 }
                 else
                 {
-                    do
+                    for (long i = number3; i != 0; i /= 10)
                     {
-                        long dividednumber;
-                        dividednumber = Math.Abs(number3 % 10);
+                        long dividednumber = Math.Abs(i % 10);
                         Console.WriteLine(dividednumber);
-                        number3 = number3 / 10;
-
-                    } while (number3 != 0);
+                    }
                     break;
                 }
 
