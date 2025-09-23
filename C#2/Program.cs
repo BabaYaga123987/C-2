@@ -97,28 +97,17 @@
                                                                                      // диагонали матрицы
             for (int i = 0; i < matrix3.GetLength(0); i++) 
             {
-                for (int j = 0; j < matrix3.GetLength(1); j++)
+                if (matrix3[i, i] >= 0)
                 {
-                    if (i == j && matrix3[i, j] >= 0)
-                    {
-                        Console.Write($"{matrix3[i, j]}\t");
-                    }
-                    
-                        
+                    Console.Write($"{matrix3[i, i]}\t");
                 }
-                
             }
             Console.WriteLine("\nПоложительные элементы побочной диагонали матрицы: "); // Выведение положительных элементов побочной
             for (int i = 0; i < matrix3.GetLength(0); i++)                              // диагонали матрицы
             {
-                for (int j = 0; j < matrix3.GetLength(1); j++)
+                if (matrix3[i, matrix3.GetLength(1) - i - 1] > 0)
                 {
-                    if (i + j == matrix3.GetLength(0) - 1 && matrix3[i, j] >= 0) // Формула для побочной диагонали. Отнимается единица,
-                                                                                 // т.к. matrix3.GetLength(0) считает индексацию от 1,
-                                                                                 // а сама матрица имеет индексацию от 0.
-                    {
-                        Console.Write($"{matrix3[i, j]}\t");
-                    }
+                    Console.Write($"{matrix3[i, matrix3.GetLength(1) - i - 1]}\t");
                 }
             }
         }
