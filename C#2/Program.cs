@@ -8,70 +8,50 @@ namespace C_2
         static void Main(string[] args)
         {
             // task 1
-            Console.WriteLine("Введите целое четырехзначное число:");
-            while (true)
+            Console.WriteLine("Задание 1:");
+            int number;
+            while(true)
             {
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out int number))
+                Console.Write("Введите целое четырехзначное число: ");
+                if (!int.TryParse (Console.ReadLine(), out number) || number < 1000 || number > 9999)
                 {
-                    number = Math.Abs(number); 
-
-                    if (number >= 1000 && number <= 9999) 
-                    {
-                        int amount = 0;
-                        foreach (char c in number.ToString())
-                        {
-                            int digit = c - '0'; // перевод символа в цифру
-                            if (digit % 2 == 0)
-                            {
-                                amount++;
-                            }
-                        }
-                        Console.WriteLine($"Количество четных цифр: {amount}");
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Некорректный ввод. Пожалуйста, введите целое число из 4 цифр:");
-                    }
+                    Console.WriteLine("Ошибка. Число не четырехзначное или не целое.");
                 }
                 else
                 {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите целое число из 4 цифр:");
+                    break;
                 }
             }
-
-            /* Примечание к упражнению 1. foreach — это цикл, который перебирает все элементы какой-то коллекции 
-             (массива, списка, строки и т. д.), по одному за раз. char c — это переменная, которая на каждой итерации 
-             принимает один символ строки. input — указывает, что мы перебираем строку input. Цикл сам знает, сколько символов, 
-             и закончит работу, когда они закончатся. 
-
-             */
+            int count = 0;
+            for (int i = number; i > 0; i /= 10)
+            {
+                if ((i % 10) % 2 == 0)
+                {
+                    count++;
+                }
+            }
+            Console.WriteLine($"Количество четных цифр в числе {number} равно: {count}");
 
             // task 2
             ulong sum = 0;
             int a;
             int b;
             Console.WriteLine("Введите число а: ");
-            string string1 = Console.ReadLine();
             while (true)
-            if (!int.TryParse(string1, out a))
+            if (!int.TryParse((Console.ReadLine()), out a))
             {
                 Console.WriteLine("Неккоректный ввод: введите целое число а");
-                string1 = Console.ReadLine();
             }
             else
             {
                 break;
             }            
             Console.WriteLine("Введите число b: ");
-            string string2 = Console.ReadLine();
             while (true)
             {
-                if (!int.TryParse(string2, out b) || a > b)
+                if (!int.TryParse((Console.ReadLine()), out b) || a > b)
                 {
                     Console.WriteLine("Неккоректный ввод: введите целое число b. Также b должно быть больше a.");
-                    string2 = Console.ReadLine();
                 }
                 else
                 {
@@ -85,14 +65,7 @@ namespace C_2
                         sum += (ulong)(i * i);
                     }
                 }
-
             Console.WriteLine($"Сумма квадратов целых нечетных чисел от a до b равна: {sum}");
-
-
-
-
-
-
 
             // task 3
             Console.WriteLine("Введите пароль: "); //Пароль: 12345
@@ -101,8 +74,7 @@ namespace C_2
             int attempts = 5;
             while (true)
             {
-                string input1 = Console.ReadLine();
-                if (int.TryParse(input1, out password) && password == correctpassword)
+                if (int.TryParse(Console.ReadLine(), out password) && password == correctpassword)
                 {
                     Console.WriteLine("Добро пожаловать!");
                     return;
