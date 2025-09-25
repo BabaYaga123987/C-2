@@ -42,6 +42,7 @@
                 }
             }
             string encrypted = encryptedBuilder.ToString();
+            Console.WriteLine($"Encrypted text: \n{encrypted}");
 
             // Инверсия словаря через for             
             Dictionary<string, char> map2 = new Dictionary<string, char>();
@@ -56,7 +57,7 @@
                 }
             }
 
-            Console.WriteLine($"Encrypted text: {encrypted}");
+
             var decryptedBuilder = new StringBuilder();
             for (int i = 0; i < encrypted.Length; i += 2)
             {
@@ -66,7 +67,7 @@
                     decryptedBuilder.Append(map2[c]);
                 }
             }
-            Console.WriteLine(decryptedBuilder.ToString());
+            Console.WriteLine($"Decrypted text: \n{decryptedBuilder.ToString()}");
             string decryptedBuilderString2 = decryptedBuilder.ToString().Replace("I", "J");
             Console.WriteLine($"Another decrypted text: \n{decryptedBuilderString2}");
         }
