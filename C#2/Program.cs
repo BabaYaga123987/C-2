@@ -45,7 +45,7 @@
             Console.WriteLine($"Encrypted text: \n{encrypted}");
 
             // Инверсия словаря через for             
-            Dictionary<string, char> map2 = new Dictionary<string, char>();
+            Dictionary<string, List<char>> map2 = new Dictionary<string, List<char>>();
             var keys = new List<char>(map.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
@@ -53,23 +53,52 @@
                 string value = map[key];
                 if (!map2.ContainsKey(value))
                 {
-                    map2[value] = key;
+                    map2[value] = new List<char>();
+                }
+
+                
+                if (!map2[value].Contains(key)) // Avoid duplicates for 'I' and 'J'
+                {
+                    map2[value].Add(key);
                 }
             }
 
+            
+            List<string> variants = new List<string>(); // List to hold all possible decryptions
+            variants.Add("");
 
-            var decryptedBuilder = new StringBuilder();
-            for (int i = 0; i < encrypted.Length; i += 2)
-            {
+            
+            for (int i = 0; i < encrypted.Length; i += 2) // Process each pair of digits in the encrypted string
+            { 
                 string c = encrypted.Substring(i, 2);
+
                 if (map2.ContainsKey(c))
                 {
-                    decryptedBuilder.Append(map2[c]);
+                    List<string> newVariants = new List<string>();
+
+                    
+                    for (int j = 0; j < variants.Count; j++)
+                    {
+                        string current = variants[j];
+
+                        List<char> possible = map2[c];
+                        for (int k = 0; k < possible.Count; k++)
+                        {
+                            char ch = possible[k];
+                            newVariants.Add(current + ch);
+                        }
+                    }
+
+                    variants = newVariants;
                 }
             }
-            Console.WriteLine($"Decrypted text: \n{decryptedBuilder.ToString()}");
-            string decryptedBuilderString2 = decryptedBuilder.ToString().Replace("I", "J");
-            Console.WriteLine($"Another decrypted text: \n{decryptedBuilderString2}");
+
+           
+            Console.WriteLine("All possible decryptions:"); // Display all possible decryptions
+            for (int i = 0; i < variants.Count; i++)
+            {
+                Console.WriteLine(variants[i]);
+            }
         }
     }
 }
