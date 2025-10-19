@@ -45,7 +45,7 @@ namespace C_2
                 Console.WriteLine("Invalid input. Please enter letters only (A-Z, a-z), and not an empty string:");
             }
 
-            string encodedMessage = Encode(message, keyword);
+                string encodedMessage = Encode(message, keyword);
                 Decode(encodedMessage, keyword);
             }
 
