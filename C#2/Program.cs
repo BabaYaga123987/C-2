@@ -31,13 +31,24 @@ namespace C_2
 
             static void Main(string[] args)
             {
-                Console.WriteLine("Enter the text to encode:");
-                string message = Console.ReadLine();
+            Console.WriteLine("Enter the text to encode:");
+            string message = Console.ReadLine();
+            Console.WriteLine("Create a keyword:");
+            string keyword;
+            while (true)
+            {
+                keyword = Console.ReadLine();
 
-                Console.WriteLine("Create a keyword:");
-                string keyword = Console.ReadLine();
+                
+                if (!string.IsNullOrWhiteSpace(keyword) && keyword.All(char.IsLetter))
+                {
+                    break; 
+                }
 
-                string encodedMessage = Encode(message, keyword);
+                Console.WriteLine("Invalid input. Please enter letters only (A-Z, a-z), and not an empty string:");
+            }
+
+            string encodedMessage = Encode(message, keyword);
                 Decode(encodedMessage, keyword);
             }
 
