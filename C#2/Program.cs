@@ -38,8 +38,6 @@ namespace C_2
             while (true)
             {
                 keyword = Console.ReadLine();
-
-                
                 if (!string.IsNullOrWhiteSpace(keyword) && keyword.All(char.IsLetter))
                 {
                     break; 
