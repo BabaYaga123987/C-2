@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            
+            Console.WriteLine("Enter your message");
+            string message = Console.ReadLine();
+            Console.WriteLine("Create a keyword");
+
         }
     }
 }
