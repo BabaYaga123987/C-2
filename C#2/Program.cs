@@ -42,7 +42,6 @@ namespace C_2
                 {
                     break; 
                 }
-
                 Console.WriteLine("Invalid input. Please enter letters only (A-Z, a-z), and not an empty string:");
             }
 
