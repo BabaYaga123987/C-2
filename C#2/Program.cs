@@ -74,19 +74,11 @@ namespace C_2
                 }
 
                 for (int i = 0; i < filteredMessage.Length; i++)
-                {
-                    messageAlphabetValue[i] = AlphabetToIndex[filteredMessage[i]];
-                }
-
-                for (int i = 0; i < filteredMessage.Length; i++)
-                {
-                    int sum = messageAlphabetValue[i] + keywordAlphabetValue[i % keyword.Length];
-                    messageAndKeywordAlphabetValue[i] = sum % 26;
-                }
-
-                for (int i = 0; i < filteredMessage.Length; i++)
-                {
-                    encodedMessageChar[i] = IndexToAlphabet[messageAndKeywordAlphabetValue[i]];
+                { 
+                messageAlphabetValue[i] = AlphabetToIndex[filteredMessage[i]];
+                int sum = messageAlphabetValue[i] + keywordAlphabetValue[i % keyword.Length];
+                messageAndKeywordAlphabetValue[i] = sum % 26;
+                encodedMessageChar[i] = IndexToAlphabet[messageAndKeywordAlphabetValue[i]];
                 }
 
                 string encodedMessage = new string(encodedMessageChar);
@@ -113,15 +105,7 @@ namespace C_2
                 for (int i = 0; i < encodedMessage.Length; i++)
                 {
                     encodedMessageCharValues[i] = AlphabetToIndex[encodedMessage[i]];
-                }
-
-                for (int i = 0; i < encodedMessage.Length; i++)
-                {
                     decodedValues[i] = (encodedMessageCharValues[i] - keywordAlphabetValues[i % keyword.Length] + 26) % 26;
-                }
-
-                for (int i = 0; i < encodedMessage.Length; i++)
-                {
                     decodedMessageChar[i] = IndexToAlphabet[decodedValues[i]];
                 }
 
