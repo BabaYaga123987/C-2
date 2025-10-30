@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace C_2
 {
     internal class Menu
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
             Console.WriteLine("=== Encryption Console Program ===");
             Console.WriteLine("1. Polybius Cipher");
@@ -17,50 +16,65 @@ namespace C_2
             Console.WriteLine("3. Caesar Cipher");
             Console.Write("\nChoose a cipher (1–3): ");
 
-            string choice = Console.ReadLine();
+            int choice = ReadIntInRange(1, 3, "Invalid input. Please enter a number between 1 and 3:");
 
-            switch (choice)
+            int method = 0;
+            if (choice != 2) // Vigenère handles method internally
             {
-                case "1":
-                    Console.WriteLine("\n--- Running Polybius Cipher ---\n");
-                    PolybiusProgram.Run(args);
-                    break;
+                Console.WriteLine("Choose a method: 1 - Encrypt, 2 - Decrypt");
+                method = ReadIntInRange(1, 2, "Invalid input. Please enter 1 for Encrypt or 2 for Decrypt:");
+            }
 
-                case "2":
-                    Console.WriteLine("\n--- Running Vigenère Cipher ---\n");
-                    VigenereProgram.Run(args);
-                    break;
-
-                case "3":
-                    Console.WriteLine("\n--- Running Caesar Cipher ---\n");
-                    CaesarProgram.Run(args);
-                    break;
-
-                default:
-                    Console.WriteLine("\nInvalid choice. Exiting the program.");
-                    break;
+            if (choice == 1)
+            {
+                if (method == 1) PolybiusCipher.Encrypt();
+                else PolybiusCipher.Decrypt();
+            }
+            else if (choice == 2)
+            {
+                VigenereCipher.Process();
+            }
+            else if (choice == 3)
+            {
+                if (method == 1) CaesarCipher.Encrypt();
+                else CaesarCipher.Decrypt();
             }
 
             Console.WriteLine("\nPress any key to exit...");
             Console.ReadKey();
         }
-    }
-    internal class PolybiusProgram
-    {
-        public static void Run(string[] args)
+
+        // Safe integer input with range checking
+        private static int ReadIntInRange(int min, int max, string errorMessage)
         {
-            Console.WriteLine("Enter the text to encrypt :");
-            string text = Console.ReadLine();
-            var onlyLettersBuilder = new StringBuilder();
-            for (int i = 0; i < text.Length; i++)
+            int value;
+            while (true)
             {
-                char c = char.ToUpper(text[i]);
-                if (c >= 'A' && c <= 'Z')
+                try
                 {
-                    onlyLettersBuilder.Append(c);
+                    string input = Console.ReadLine();
+                    if (!int.TryParse(input, out value) || value < min || value > max)
+                    {
+                        Console.WriteLine(errorMessage);
+                    }
+                    else break;
+                }
+                catch
+                {
+                    Console.WriteLine(errorMessage);
                 }
             }
-            string onlyLetters = onlyLettersBuilder.ToString();
+            return value;
+        }
+    }
+
+    internal class PolybiusCipher
+    {
+        // Encrypt text using Polybius cipher
+        public static void Encrypt()
+        {
+            Console.WriteLine("Enter text to encrypt:");
+            string input = Console.ReadLine().ToUpper();
 
             Dictionary<char, string> map = new Dictionary<char, string>()
             {
@@ -72,257 +86,249 @@ namespace C_2
                 {'Z',"55"}
             };
 
-            var encryptedBuilder = new StringBuilder();
-            for (int i = 0; i < onlyLetters.Length; i++)
+            StringBuilder encrypted = new StringBuilder();
+            for (int i = 0; i < input.Length; i++)
             {
-                char c = onlyLetters[i];
+                char c = input[i];
                 if (map.ContainsKey(c))
                 {
-                    encryptedBuilder.Append(map[c]);
+                    encrypted.Append(map[c]);
                 }
             }
-            string encrypted = encryptedBuilder.ToString();
-            Console.WriteLine($"Encrypted text: \n{encrypted}");
 
-            Dictionary<string, List<char>> map2 = new Dictionary<string, List<char>>();
-            var keys = new List<char>(map.Keys);
-            for (int i = 0; i < keys.Count; i++)
+            Console.WriteLine("Encrypted text:");
+            Console.WriteLine(encrypted.ToString());
+        }
+
+        // Decrypt text using Polybius cipher (J and I share the same code)
+        public static void Decrypt()
+        {
+            string encrypted;
+            while (true)
             {
-                char key = keys[i];
-                string value = map[key];
-                if (!map2.ContainsKey(value))
-                {
-                    map2[value] = new List<char>();
-                }
-
-                if (!map2[value].Contains(key))
-                {
-                    map2[value].Add(key);
-                }
+                Console.WriteLine("Enter the encrypted text (digits only):");
+                encrypted = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(encrypted) && int.TryParse(encrypted, out _))
+                    break;
+                Console.WriteLine("Invalid input. Please enter only digits.");
             }
 
-            List<string> variants = new List<string>();
-            variants.Add("");
+            Dictionary<string, List<char>> map = new Dictionary<string, List<char>>()
+            {
+                {"11", new List<char>{'A'}}, {"12", new List<char>{'B'}}, {"13", new List<char>{'C'}},
+                {"14", new List<char>{'D'}}, {"15", new List<char>{'E'}}, {"21", new List<char>{'F'}},
+                {"22", new List<char>{'G'}}, {"23", new List<char>{'H'}}, {"24", new List<char>{'I','J'}},
+                {"25", new List<char>{'K'}}, {"31", new List<char>{'L'}}, {"32", new List<char>{'M'}},
+                {"33", new List<char>{'N'}}, {"34", new List<char>{'O'}}, {"35", new List<char>{'P'}},
+                {"41", new List<char>{'Q'}}, {"42", new List<char>{'R'}}, {"43", new List<char>{'S'}},
+                {"44", new List<char>{'T'}}, {"45", new List<char>{'U'}}, {"51", new List<char>{'V'}},
+                {"52", new List<char>{'W'}}, {"53", new List<char>{'X'}}, {"54", new List<char>{'Y'}},
+                {"55", new List<char>{'Z'}}
+            };
+
+            List<string> results = new List<string>() { "" };
 
             for (int i = 0; i < encrypted.Length; i += 2)
             {
-                string c = encrypted.Substring(i, 2);
-
-                if (map2.ContainsKey(c))
+                if (i + 1 < encrypted.Length)
                 {
-                    List<string> newVariants = new List<string>();
-                    for (int j = 0; j < variants.Count; j++)
+                    string pair = encrypted.Substring(i, 2);
+                    if (map.ContainsKey(pair))
                     {
-                        string current = variants[j];
-                        List<char> possible = map2[c];
-                        for (int k = 0; k < possible.Count; k++)
+                        List<string> newResults = new List<string>();
+                        for (int j = 0; j < results.Count; j++)
                         {
-                            char ch = possible[k];
-                            newVariants.Add(current + ch);
+                            for (int k = 0; k < map[pair].Count; k++)
+                            {
+                                newResults.Add(results[j] + map[pair][k]);
+                            }
                         }
+                        results = newResults;
                     }
-                    variants = newVariants;
                 }
             }
 
-            Console.WriteLine("All possible decryptions:");
-            for (int i = 0; i < variants.Count; i++)
+            Console.WriteLine("Possible decryptions:");
+            foreach (string res in results)
             {
-                Console.WriteLine(variants[i]);
+                Console.WriteLine(res);
             }
         }
     }
-    internal class VigenereProgram
+
+    internal class VigenereCipher
     {
-        static readonly Dictionary<char, int> AlphabetToIndex = new Dictionary<char, int>()
+        // Combined encryption and decryption with known keyword
+        public static void Process()
         {
-            {'A',0},{'B',1},{'C',2},{'D',3},{'E',4},
-            {'F',5},{'G',6},{'H',7},{'I',8},{'J',9},
-            {'K',10},{'L',11},{'M',12},{'N',13},{'O',14},
-            {'P',15},{'Q',16},{'R',17},{'S',18},{'T',19},
-            {'U',20},{'V',21},{'W',22},{'X',23},{'Y',24},
-            {'Z',25}
-        };
-
-        static readonly Dictionary<int, char> IndexToAlphabet = new Dictionary<int, char>()
-        {
-            {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},
-            {5,'F'},{6,'G'},{7,'H'},{8,'I'},{9,'J'},
-            {10,'K'},{11,'L'},{12,'M'},{13,'N'},{14,'O'},
-            {15,'P'},{16,'Q'},{17,'R'},{18,'S'},{19,'T'},
-            {20,'U'},{21,'V'},{22,'W'},{23,'X'},{24,'Y'},
-            {25,'Z'}
-        };
-
-        public static void Run(string[] args)
-        {
-            Console.WriteLine("Enter the text to encode:");
-            string message = Console.ReadLine();
-            Console.WriteLine("Create a keyword:");
+            Console.WriteLine("Enter the text:");
+            string text = Console.ReadLine();
             string keyword;
+
             while (true)
             {
-                keyword = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(keyword) && keyword.All(char.IsLetter))
-                {
-                    break;
-                }
-                Console.WriteLine("Invalid input. Please enter letters only (A-Z, a-z), and not an empty string:");
+                Console.WriteLine("Enter keyword (letters only):");
+                keyword = Console.ReadLine().ToUpper();
+                if (!string.IsNullOrWhiteSpace(keyword) && IsAllLetters(keyword)) break;
+                Console.WriteLine("Invalid input. Please enter letters only (A-Z).");
             }
 
-            string encodedMessage = Encode(message, keyword);
-            Decode(encodedMessage, keyword);
+            Console.WriteLine("Choose: 1 - Encrypt, 2 - Decrypt");
+            int choice = ReadIntInRange(1, 2, "Invalid input. Enter 1 or 2:");
+
+            if (choice == 1)
+            {
+                string encrypted = Encrypt(text, keyword);
+                Console.WriteLine("Encrypted text:");
+                Console.WriteLine(encrypted);
+            }
+            else
+            {
+                string decrypted = Decrypt(text, keyword);
+                Console.WriteLine("Decrypted text:");
+                Console.WriteLine(decrypted);
+            }
         }
 
-        static string Encode(string message, string keyword)
+        private static bool IsAllLetters(string s)
         {
-            string filteredMessage = "";
-            for (int i = 0; i < message.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                char c = char.ToUpper(message[i]);
+                if (!char.IsLetter(s[i])) return false;
+            }
+            return true;
+        }
+
+        private static int ReadIntInRange(int min, int max, string errorMessage)
+        {
+            int value;
+            while (true)
+            {
+                try
+                {
+                    string input = Console.ReadLine();
+                    if (!int.TryParse(input, out value) || value < min || value > max)
+                    {
+                        Console.WriteLine(errorMessage);
+                    }
+                    else break;
+                }
+                catch
+                {
+                    Console.WriteLine(errorMessage);
+                }
+            }
+            return value;
+        }
+
+        // Encrypt Vigenere
+        private static string Encrypt(string text, string keyword)
+        {
+            text = text.ToUpper();
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
                 if (c >= 'A' && c <= 'Z')
                 {
-                    filteredMessage += c;
-                }
-            }
-
-            keyword = keyword.ToUpper();
-
-            int[] messageAlphabetValue = new int[filteredMessage.Length];
-            int[] keywordAlphabetValue = new int[keyword.Length];
-            int[] messageAndKeywordAlphabetValue = new int[filteredMessage.Length];
-            char[] encodedMessageChar = new char[filteredMessage.Length];
-
-            for (int i = 0; i < keyword.Length; i++)
-            {
-                keywordAlphabetValue[i] = AlphabetToIndex[keyword[i]];
-            }
-
-            for (int i = 0; i < filteredMessage.Length; i++)
-            {
-                messageAlphabetValue[i] = AlphabetToIndex[filteredMessage[i]];
-                int sum = messageAlphabetValue[i] + keywordAlphabetValue[i % keyword.Length];
-                messageAndKeywordAlphabetValue[i] = sum % 26;
-                encodedMessageChar[i] = IndexToAlphabet[messageAndKeywordAlphabetValue[i]];
-            }
-
-            string encodedMessage = new string(encodedMessageChar);
-
-            Console.WriteLine($"Encoded message:\n{encodedMessage}");
-            return encodedMessage;
-        }
-
-        static void Decode(string encodedMessage, string keyword)
-        {
-            keyword = keyword.ToUpper();
-            encodedMessage = encodedMessage.ToUpper();
-
-            int[] encodedMessageCharValues = new int[encodedMessage.Length];
-            int[] keywordAlphabetValues = new int[keyword.Length];
-            int[] decodedValues = new int[encodedMessage.Length];
-            char[] decodedMessageChar = new char[encodedMessage.Length];
-
-            for (int i = 0; i < keyword.Length; i++)
-            {
-                keywordAlphabetValues[i] = AlphabetToIndex[keyword[i]];
-            }
-
-            for (int i = 0; i < encodedMessage.Length; i++)
-            {
-                encodedMessageCharValues[i] = AlphabetToIndex[encodedMessage[i]];
-                decodedValues[i] = (encodedMessageCharValues[i] - keywordAlphabetValues[i % keyword.Length] + 26) % 26;
-                decodedMessageChar[i] = IndexToAlphabet[decodedValues[i]];
-            }
-
-            string decodedMessage = new string(decodedMessageChar);
-            Console.WriteLine($"Decoded message:\n{decodedMessage}");
-        }
-    }
-    internal class CaesarProgram
-    {
-        static readonly Dictionary<char, int> AlphabetToIndex2 = new Dictionary<char, int>()
-        {
-            {'A',0},{'B',1},{'C',2},{'D',3},{'E',4},
-            {'F',5},{'G',6},{'H',7},{'I',8},{'J',9},
-            {'K',10},{'L',11},{'M',12},{'N',13},{'O',14},
-            {'P',15},{'Q',16},{'R',17},{'S',18},{'T',19},
-            {'U',20},{'V',21},{'W',22},{'X',23},{'Y',24},
-            {'Z',25}
-        };
-
-        static readonly Dictionary<int, char> IndexToAlphabet2 = new Dictionary<int, char>()
-        {
-            {0,'A'},{1,'B'},{2,'C'},{3,'D'},{4,'E'},
-            {5,'F'},{6,'G'},{7,'H'},{8,'I'},{9,'J'},
-            {10,'K'},{11,'L'},{12,'M'},{13,'N'},{14,'O'},
-            {15,'P'},{16,'Q'},{17,'R'},{18,'S'},{19,'T'},
-            {20,'U'},{21,'V'},{22,'W'},{23,'X'},{24,'Y'},
-            {25,'Z'}
-        };
-
-        public static void Run(string[] args)
-        {
-            Console.WriteLine("Enter the text to encrypt:");
-            string text = Console.ReadLine();
-            Console.WriteLine("Create a code (from 1 to 25):");
-            int code;
-            while (true)
-            {
-                if (!int.TryParse(Console.ReadLine(), out code) || code < 1 || code > 25)
-                {
-                    Console.WriteLine("Invalid input. Please enter a number from 1 to 25 to encrypt your message:");
+                    int shift = keyword[i % keyword.Length] - 'A';
+                    char enc = (char)((c - 'A' + shift) % 26 + 'A');
+                    result.Append(enc);
                 }
                 else
                 {
-                    break;
+                    result.Append(c);
                 }
             }
-            string encryptedText = Encode(text, code);
-            Decode(encryptedText, code);
+            return result.ToString();
         }
 
-        static string Encode(string text, int code)
+        // Decrypt Vigenere
+        private static string Decrypt(string text, string keyword)
         {
-            string filteredtext = "";
+            text = text.ToUpper();
+            StringBuilder result = new StringBuilder();
+
             for (int i = 0; i < text.Length; i++)
             {
-                char c = char.ToUpper(text[i]);
+                char c = text[i];
                 if (c >= 'A' && c <= 'Z')
                 {
-                    filteredtext += c;
+                    int shift = keyword[i % keyword.Length] - 'A';
+                    char dec = (char)((c - 'A' - shift + 26) % 26 + 'A');
+                    result.Append(dec);
+                }
+                else
+                {
+                    result.Append(c);
                 }
             }
-            char[] textArray = filteredtext.ToCharArray();
-            string encryptedText = "";
-            for (int i = 0; i < textArray.Length; i++)
-            {
-                int index = AlphabetToIndex2[textArray[i]];
-                int newIndex = (index + code) % 26;
-                char newChar = IndexToAlphabet2[newIndex];
-                encryptedText += newChar;
-            }
-            Console.WriteLine("Encrypted text: " + encryptedText);
-            return encryptedText;
-        }
-
-        static void Decode(string encryptedText, int code)
-        {
-            char[] textArray = encryptedText.ToCharArray();
-            string decryptedText = "";
-            for (int i = 0; i < textArray.Length; i++)
-            {
-                int index = AlphabetToIndex2[textArray[i]];
-                int newIndex = (index - code + 26) % 26;
-                char newChar = IndexToAlphabet2[newIndex];
-                decryptedText += newChar;
-            }
-            Console.WriteLine("Decrypted text:" + decryptedText);
+            return result.ToString();
         }
     }
 
+    internal class CaesarCipher
+    {
+        // Encrypt Caesar cipher
+        public static void Encrypt()
+        {
+            Console.WriteLine("Enter text to encrypt:");
+            string input = Console.ReadLine().ToUpper();
+
+            int key = 0;
+            while (true)
+            {
+                Console.WriteLine("Enter key (1-25):");
+                string keyInput = Console.ReadLine();
+                if (int.TryParse(keyInput, out key) && key >= 1 && key <= 25) break;
+                Console.WriteLine("Invalid input. Please enter a number between 1 and 25.");
+            }
+
+            StringBuilder encrypted = new StringBuilder();
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                if (c >= 'A' && c <= 'Z')
+                {
+                    char newChar = (char)(((c - 'A' + key) % 26) + 'A');
+                    encrypted.Append(newChar);
+                }
+                else
+                {
+                    encrypted.Append(c);
+                }
+            }
+
+            Console.WriteLine("Encrypted text:");
+            Console.WriteLine(encrypted.ToString());
+        }
+
+        // Decrypt Caesar cipher (without knowing the key)
+        public static void Decrypt()
+        {
+            Console.WriteLine("Enter text to decrypt:");
+            string encrypted = Console.ReadLine().ToUpper();
+
+            Console.WriteLine("\nPossible decryptions:");
+            for (int key = 1; key < 26; key++)
+            {
+                StringBuilder decrypted = new StringBuilder();
+                for (int i = 0; i < encrypted.Length; i++)
+                {
+                    char c = encrypted[i];
+                    if (c >= 'A' && c <= 'Z')
+                    {
+                        char newChar = (char)(((c - 'A' - key + 26) % 26) + 'A');
+                        decrypted.Append(newChar);
+                    }
+                    else
+                    {
+                        decrypted.Append(c);
+                    }
+                }
+                Console.WriteLine($"Key {key}: {decrypted}");
+            }
+        }
+    }
 }
-
-
-
-
-
