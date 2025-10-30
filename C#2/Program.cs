@@ -14,15 +14,28 @@ namespace C_2
             Console.WriteLine("1. Polybius Cipher");
             Console.WriteLine("2. Vigenère Cipher");
             Console.WriteLine("3. Caesar Cipher");
-            Console.Write("\nChoose a cipher (1–3): ");
 
-            int choice = ReadIntInRange(1, 3, "Invalid input. Please enter a number between 1 and 3:");
+            int choice = 0;
+            while (true)
+            {
+                Console.Write("\nChoose a cipher (1–3): ");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out choice) && choice >= 1 && choice <= 3)
+                    break;
+                Console.WriteLine("Invalid input. Please enter a number between 1 and 3:");
+            }
 
             int method = 0;
             if (choice != 2) // Vigenère handles method internally
             {
-                Console.WriteLine("Choose a method: 1 - Encrypt, 2 - Decrypt");
-                method = ReadIntInRange(1, 2, "Invalid input. Please enter 1 for Encrypt or 2 for Decrypt:");
+                while (true)
+                {
+                    Console.WriteLine("Choose a method: 1 - Encrypt, 2 - Decrypt");
+                    string methodInput = Console.ReadLine();
+                    if (int.TryParse(methodInput, out method) && (method == 1 || method == 2))
+                        break;
+                    Console.WriteLine("Invalid input. Please enter 1 for Encrypt or 2 for Decrypt:");
+                }
             }
 
             if (choice == 1)
@@ -43,34 +56,10 @@ namespace C_2
             Console.WriteLine("\nPress any key to exit...");
             Console.ReadKey();
         }
-
-        // Safe integer input with range checking
-        private static int ReadIntInRange(int min, int max, string errorMessage)
-        {
-            int value;
-            while (true)
-            {
-                try
-                {
-                    string input = Console.ReadLine();
-                    if (!int.TryParse(input, out value) || value < min || value > max)
-                    {
-                        Console.WriteLine(errorMessage);
-                    }
-                    else break;
-                }
-                catch
-                {
-                    Console.WriteLine(errorMessage);
-                }
-            }
-            return value;
-        }
     }
 
     internal class PolybiusCipher
     {
-        // Encrypt text using Polybius cipher
         public static void Encrypt()
         {
             Console.WriteLine("Enter text to encrypt:");
@@ -100,7 +89,6 @@ namespace C_2
             Console.WriteLine(encrypted.ToString());
         }
 
-        // Decrypt text using Polybius cipher (J and I share the same code)
         public static void Decrypt()
         {
             string encrypted;
@@ -158,7 +146,6 @@ namespace C_2
 
     internal class VigenereCipher
     {
-        // Combined encryption and decryption with known keyword
         public static void Process()
         {
             Console.WriteLine("Enter the text:");
@@ -173,8 +160,15 @@ namespace C_2
                 Console.WriteLine("Invalid input. Please enter letters only (A-Z).");
             }
 
-            Console.WriteLine("Choose: 1 - Encrypt, 2 - Decrypt");
-            int choice = ReadIntInRange(1, 2, "Invalid input. Enter 1 or 2:");
+            int choice = 0;
+            while (true)
+            {
+                Console.WriteLine("Choose: 1 - Encrypt, 2 - Decrypt");
+                string methodInput = Console.ReadLine();
+                if (int.TryParse(methodInput, out choice) && (choice == 1 || choice == 2))
+                    break;
+                Console.WriteLine("Invalid input. Enter 1 or 2:");
+            }
 
             if (choice == 1)
             {
@@ -199,29 +193,6 @@ namespace C_2
             return true;
         }
 
-        private static int ReadIntInRange(int min, int max, string errorMessage)
-        {
-            int value;
-            while (true)
-            {
-                try
-                {
-                    string input = Console.ReadLine();
-                    if (!int.TryParse(input, out value) || value < min || value > max)
-                    {
-                        Console.WriteLine(errorMessage);
-                    }
-                    else break;
-                }
-                catch
-                {
-                    Console.WriteLine(errorMessage);
-                }
-            }
-            return value;
-        }
-
-        // Encrypt Vigenere
         private static string Encrypt(string text, string keyword)
         {
             text = text.ToUpper();
@@ -244,7 +215,6 @@ namespace C_2
             return result.ToString();
         }
 
-        // Decrypt Vigenere
         private static string Decrypt(string text, string keyword)
         {
             text = text.ToUpper();
@@ -270,7 +240,6 @@ namespace C_2
 
     internal class CaesarCipher
     {
-        // Encrypt Caesar cipher
         public static void Encrypt()
         {
             Console.WriteLine("Enter text to encrypt:");
@@ -304,7 +273,6 @@ namespace C_2
             Console.WriteLine(encrypted.ToString());
         }
 
-        // Decrypt Caesar cipher (without knowing the key)
         public static void Decrypt()
         {
             Console.WriteLine("Enter text to decrypt:");
