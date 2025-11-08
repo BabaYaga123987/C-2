@@ -6,7 +6,7 @@ namespace C_2
 {
     internal class Menu
     {
-        static void Main()
+        static void Main() // void означает, что метод не возвращает никакого значения после выполнения. 
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -60,7 +60,8 @@ namespace C_2
 
     internal class PolybiusCipher
     {
-        public static void Encrypt()
+        public static void Encrypt() // public: модификатор доступа,
+                                     // который указывает на то, что метод может быть вызван из любого другого класса.
         {
             Console.WriteLine("Enter text to encrypt:");
             string input = Console.ReadLine().ToUpper();
